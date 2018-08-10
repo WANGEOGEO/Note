@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public void next(View view) {
         TextView tv = (TextView) findViewById(R.id.editText);
         if (notes.size()==0) {
-            return;
+            tv.setText("plz fill in, no stored notes");
         }
         if (0 == notes.size() - 1) {
             String show = notes.get(pointer);
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             pointer ++;
             if (pointer == notes.size()) {
                 pointer = 0;
+                tv.setText(notes.get(pointer));
             } else {
                 String show = notes.get(pointer);
                 tv.setText(show);
@@ -52,11 +53,24 @@ public class MainActivity extends AppCompatActivity {
     public void delete(View view) {
         TextView tv = (TextView) findViewById(R.id.editText);
         if (notes.size() == 0) {
-            return;
+            tv.setText("No more notes for deleting, please write some now.");
         } else {
-            tv.setText(notes.get(pointer - 1));
-            notes.remove(pointer);
-            pointer --;
+            if (pointer == notes.size() - 1) {
+                if (pointer > 0) {
+                    pointer --;
+                    tv.setText(notes.get(pointer));
+                } else if (pointer == 0) {
+                    notes.remove(pointer);
+                    if (notes.size() == 0) {
+                        tv.setText("No more notes for deleting, please write some now.");
+                    } else {
+                        tv.setText(pointer);
+                    }
+                }
+            } else {
+                notes.remove(pointer);
+                tv.setText(notes.get(pointer));
+            }
         }
     }
 }
