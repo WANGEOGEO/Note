@@ -8,9 +8,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    @author u6165791
+    all codes are written by Simian Wang. u6165791
+ */
+
 public class MainActivity extends AppCompatActivity {
     List<String> notes = new ArrayList<>();
-    int pointer = 0;
+    int pointer = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,19 +26,26 @@ public class MainActivity extends AppCompatActivity {
     public void clear(View view) {
         TextView tv = (TextView) findViewById(R.id.editText);
         notes.add(tv.getText().toString());
-        tv.setText("This is my note application !");
+        tv.setText("");
     }
 
     public void next(View view) {
         TextView tv = (TextView) findViewById(R.id.editText);
-        if (pointer == notes.size() - 1) {
-            String show = notes.get(0);
-            tv.setText(show);
-            pointer = 0;
-        } else {
+        if (notes.size()==0) {
+            return;
+        }
+        if (0 == notes.size() - 1) {
             String show = notes.get(pointer);
             tv.setText(show);
+            pointer = -1;
+        } else {
             pointer ++;
+            if (pointer == notes.size()) {
+                pointer = 0;
+            } else {
+                String show = notes.get(pointer);
+                tv.setText(show);
+            }
         }
     }
 
@@ -42,19 +54,9 @@ public class MainActivity extends AppCompatActivity {
         if (notes.size() == 0) {
             return;
         } else {
-            if (pointer == 0) {
-                if (notes.size() == 1) {
-                    tv.setText("This is my note application !");
-                    notes.remove(pointer);
-                } else {
-                    tv.setText(notes.get(pointer + 1));
-                    notes.remove(pointer);
-                }
-            } else {
-                tv.setText(notes.get(pointer - 1));
-                notes.remove(pointer);
-                pointer --;
-            }
+            tv.setText(notes.get(pointer - 1));
+            notes.remove(pointer);
+            pointer --;
         }
     }
 }
