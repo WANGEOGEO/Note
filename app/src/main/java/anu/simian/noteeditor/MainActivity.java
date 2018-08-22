@@ -31,21 +31,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void next(View view) {
         TextView tv = (TextView) findViewById(R.id.editText);
-        if (notes.size()==0) {
+        if (notes.size() == 0) {
             tv.setText("plz fill in, no stored notes");
-        }
-        if (0 == notes.size() - 1) {
-            String show = notes.get(pointer);
-            tv.setText(show);
-            pointer = -1;
         } else {
-            pointer ++;
-            if (pointer == notes.size()) {
-                pointer = 0;
-                tv.setText(notes.get(pointer));
-            } else {
+            if (0 == notes.size() - 1) {
                 String show = notes.get(pointer);
                 tv.setText(show);
+                pointer = -1;
+            } else {
+                pointer++;
+                if (pointer == notes.size()) {
+                    pointer = 0;
+                    tv.setText(notes.get(pointer));
+                } else {
+                    String show = notes.get(pointer);
+                    tv.setText(show);
+                }
             }
         }
     }
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             if (pointer == notes.size() - 1) {
                 if (pointer > 0) {
-                    pointer --;
+                    pointer--;
                     tv.setText(notes.get(pointer));
                 } else if (pointer == 0) {
                     notes.remove(pointer);
